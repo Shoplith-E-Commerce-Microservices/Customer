@@ -1,3 +1,17 @@
 spring:
   application:
     name: customers
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shoplith_customers
+    username: postgres
+    password: vyrazu
+    driver-class-name: org.postgresql.Driver
+  output:
+    ansi:
+      enabled: ALWAYS
+  devtools:
+    restart:
+      enabled: true
