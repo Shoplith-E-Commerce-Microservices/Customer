@@ -1,10 +1,12 @@
 package com.shoplith.customers.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,22 +22,17 @@ public class Users {
     private UUID id;
     private String email;
     private String password;
-    @Column(name = "provider_id")
+    @Nullable
     private String providerId;
-    @Column(name = "provider_name")
+    @Nullable
     private String providerName;
-    @Column(name = "is_active")
     private Boolean isActive;
-    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
     @OneToOne(mappedBy = "user")
     private Profile profile;
-
     @OneToMany(mappedBy = "user")
     private List<Address> userAddress;
 }

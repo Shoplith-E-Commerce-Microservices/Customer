@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/shoplith_customers
     username: postgres
-    password: Souvikp683@
+    password: vyrazu
     driver-class-name: org.postgresql.Driver
   output:
     ansi:

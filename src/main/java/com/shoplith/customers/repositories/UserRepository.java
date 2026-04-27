@@ -1,4 +1,16 @@
 package com.shoplith.customers.repositories;
 
-public interface UserRepository {
+import com.shoplith.customers.models.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<Users,Integer> {
+
+    public Optional<Users> findByEmail(String email);
+
+
+
 }
