@@ -1,13 +1,13 @@
 spring:
   application:
-    name: customers
+    name: customer-service
   jpa:
     hibernate:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/shoplith_customers
     username: postgres
-    password: vyrazu
+    password: Souvikp683@
     driver-class-name: org.postgresql.Driver
   output:
     ansi:
@@ -18,3 +18,25 @@ spring:
 
 server:
   port: 8001
+  servlet:
+   context-path: /customer-app/api
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:5001/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Customer Service
+    description: Shoplith E-commerce Application (Customer Service)
+    version: 1.0.0
