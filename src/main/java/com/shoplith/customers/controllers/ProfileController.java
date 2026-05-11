@@ -21,6 +21,7 @@ public class ProfileController {
 
     @PostMapping("/customers/me")
     public ResponseEntity<ApiResponse<ProfileDto>> createProfile(@RequestBody  ProfilePayload payload){
+        System.out.println("Calling customer api ");
         try{
             return ResponseEntity.status(201).body(new ApiResponse<>(201,"Profile has been created successfully", ApiResponse.Status.SUCCESS,profileService.createProfile(payload)));
         }catch (Exception e){

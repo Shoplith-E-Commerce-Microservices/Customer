@@ -1,6 +1,7 @@
 package com.shoplith.customers.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,8 @@ public class Profile {
     @Column(name = "image_url")
     private String imageUrl;
 
-    private String number;
+    @Nullable
+    private String number = "1234567890";
 
     @Column(name = "created_at")
     @CreationTimestamp

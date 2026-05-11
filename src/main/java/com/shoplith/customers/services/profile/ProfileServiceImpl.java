@@ -27,7 +27,8 @@ public class ProfileServiceImpl implements ProfileService{
         profile.setImageUrl(null);
         profile.setName(profile.getName());
         profile.setAddress(null);
-        profile.setNumber(null);
+        profile.setNumber("");
+        profileRepository.save(profile);
         return ProfileMapper.mapToProfileDto(profileRepository.save(profile));
     }
 }
