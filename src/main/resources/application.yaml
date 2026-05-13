@@ -40,3 +40,6 @@ info:
     name: Customer Service
     description: Shoplith E-commerce Application (Customer Service)
     version: 1.0.0
+
+jwt:
+  secret: dsamdnash32qw903u0riowqejoirj3290roijaskflnlksznfklnsanfasf
