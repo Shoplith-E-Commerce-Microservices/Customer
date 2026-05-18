@@ -2,12 +2,15 @@ package com.shoplith.customers.services.profile;
 
 import com.shoplith.customers.dto.ProfileDto;
 import com.shoplith.customers.exceptions.ProfileAlreadyExistException;
+import com.shoplith.customers.exceptions.ProfileNotFoundException;
 import com.shoplith.customers.mapper.ProfileMapper;
 import com.shoplith.customers.models.Profile;
 import com.shoplith.customers.payload.ProfilePayload;
 import com.shoplith.customers.repositories.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,11 @@ public class ProfileServiceImpl implements ProfileService{
         profile.setNumber("");
         profileRepository.save(profile);
         return ProfileMapper.mapToProfileDto(profileRepository.save(profile));
+    }
+
+    @Override
+    public ProfileDto getProfileByUserId(UUID userId) {
+        Profile profile = profileRepository.findByUserId(userId).orElseThrow(()-> new ProfileNotFoundException("Profile doesn't exist"));
+        return ProfileMapper.mapToProfileDto(profile);
     }
 }
