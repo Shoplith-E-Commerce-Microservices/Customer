@@ -28,10 +28,12 @@ public class ProfileController {
         }
     }
 
-    @GetMapping("/customers/me")
-    public ResponseEntity<ApiResponse<ProfileDto>> createProfile(UUID userId){
+    @GetMapping("/customer/me")
+    public ResponseEntity<ApiResponse<ProfileDto>> getProfileByCustomerIddddd(){
+
         try{
-            return ResponseEntity.status(201).body(new ApiResponse<>(200,"Profile has been retrieved successfully", ApiResponse.Status.SUCCESS,profileService.getProfileByUserId(userId)));
+            System.out.println("Running ======");
+            return ResponseEntity.status(201).body(new ApiResponse<>(200,"Profile has been retrieved successfully", ApiResponse.Status.SUCCESS,profileService.getProfileByUserIddd()));
         }catch (Exception e){
             return ResponseEntity.status(201).body(new ApiResponse<>(500,e.getMessage(), ApiResponse.Status.ERROR));
 

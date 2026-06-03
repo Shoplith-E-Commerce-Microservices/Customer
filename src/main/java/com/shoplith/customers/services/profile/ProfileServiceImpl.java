@@ -1,5 +1,6 @@
 package com.shoplith.customers.services.profile;
 
+import com.nimbusds.jwt.JWT;
 import com.shoplith.customers.dto.ProfileDto;
 import com.shoplith.customers.exceptions.ProfileAlreadyExistException;
 import com.shoplith.customers.exceptions.ProfileNotFoundException;
@@ -7,9 +8,15 @@ import com.shoplith.customers.mapper.ProfileMapper;
 import com.shoplith.customers.models.Profile;
 import com.shoplith.customers.payload.ProfilePayload;
 import com.shoplith.customers.repositories.ProfileRepository;
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.UUID;
 
 @Service
@@ -35,9 +42,21 @@ public class ProfileServiceImpl implements ProfileService{
         return ProfileMapper.mapToProfileDto(profileRepository.save(profile));
     }
 
-    @Override
-    public ProfileDto getProfileByUserId(UUID userId) {
-        Profile profile = profileRepository.findByUserId(userId).orElseThrow(()-> new ProfileNotFoundException("Profile doesn't exist"));
-        return ProfileMapper.mapToProfileDto(profile);
+
+
+
+    public ProfileDto getProfileByUserIddd() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Profile profile = profileRepository.findByUserId(userId).orElseThrow(()-> new ProfileNotFoundException("Profile doesn't exist"));
+//        return ProfileMapper.mapToProfileDto(profile);
+        if(auth instanceof JwtAuthenticationToken token){
+            Jwt jwt = (Jwt) token.getToken();
+            Object tokenData = jwt.getPayload();
+            System.out.println("Token Data  " + tokenData.toString());
+
+//            System.out.println("Get Token "  + );
+
+        }
+        return null;
     }
 }
