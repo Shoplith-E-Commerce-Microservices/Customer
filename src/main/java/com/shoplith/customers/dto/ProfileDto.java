@@ -1,5 +1,6 @@
 package com.shoplith.customers.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.shoplith.customers.models.Address;
 import jakarta.persistence.CascadeType;
@@ -16,10 +17,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProfileDto {
 
     private UUID id;
     private String name;
+    private String username;
     private String email;
     private String imageUrl;
     private String number;

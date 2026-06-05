@@ -8,6 +8,6 @@ import java.util.UUID;
 public interface ProfileService {
 
     public ProfileDto createProfile(ProfilePayload payload);
-    public ProfileDto getProfileByUserIddd();
+    public ProfileDto getProfileByUserId();
 
 }

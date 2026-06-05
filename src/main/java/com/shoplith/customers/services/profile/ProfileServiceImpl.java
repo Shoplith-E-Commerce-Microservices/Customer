@@ -8,23 +8,20 @@ import com.shoplith.customers.mapper.ProfileMapper;
 import com.shoplith.customers.models.Profile;
 import com.shoplith.customers.payload.ProfilePayload;
 import com.shoplith.customers.repositories.ProfileRepository;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService{
-
     private final ProfileRepository profileRepository;
-
     @Override
     public ProfileDto createProfile(ProfilePayload payload) {
         if(profileRepository.findByUserId(payload.getUserId()).isPresent()){
@@ -42,21 +39,35 @@ public class ProfileServiceImpl implements ProfileService{
         return ProfileMapper.mapToProfileDto(profileRepository.save(profile));
     }
 
-
-
-
-    public ProfileDto getProfileByUserIddd() {
+    public ProfileDto getProfileByUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Profile profile = profileRepository.findByUserId(userId).orElseThrow(()-> new ProfileNotFoundException("Profile doesn't exist"));
-//        return ProfileMapper.mapToProfileDto(profile);
-        if(auth instanceof JwtAuthenticationToken token){
-            Jwt jwt = (Jwt) token.getToken();
-            Object tokenData = jwt.getPayload();
-            System.out.println("Token Data  " + tokenData.toString());
+        if (auth instanceof JwtAuthenticationToken token) {
+          // these data just for my reference
+            Jwt jwt = token.getToken();
+            // Raw JWT token
+            String accessToken = jwt.getTokenValue();
+            System.out.println("Access Token: " + accessToken);
+            // All claims
+            System.out.println("Claims: " + jwt.getClaims());
+            // Subject (usually userId)
+            System.out.println("Subject: " + jwt.getSubject());
+            System.out.println("UUID: " + jwt.getClaimAsString("uuid"));
+            String  uuid = jwt.getClaimAsString("uuid");
+            String  username = jwt.getClaimAsString("username");
 
-//            System.out.println("Get Token "  + );
-
+            Profile profileData = profileRepository.findByUserId(UUID.fromString(uuid)).orElseThrow(()-> new ProfileNotFoundException("Profile doesn't exist"));
+            ProfileDto dtoData =  new ProfileDto();
+            dtoData.setName(profileData.getName());
+            dtoData.setEmail(profileData.getEmail());
+            dtoData.setAddress(profileData.getAddress());
+            dtoData.setImageUrl(profileData.getImageUrl());
+            dtoData.setCreatedAt(profileData.getCreatedAt());
+            dtoData.setUpdatedAt(profileData.getUpdatedAt());
+            dtoData.setNumber(profileData.getNumber());
+            dtoData.setUsername(username);
+            return dtoData;
         }
+
         return null;
     }
 }

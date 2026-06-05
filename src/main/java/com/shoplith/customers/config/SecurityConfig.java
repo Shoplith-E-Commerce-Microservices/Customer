@@ -87,6 +87,7 @@ public class SecurityConfig {
                         // Public Routes
                         .requestMatchers(
                                 "/api/v1/customers/me",
+                                "/api/v1/internal/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",

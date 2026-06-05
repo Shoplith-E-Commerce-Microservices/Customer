@@ -18,24 +18,21 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @PostMapping("/customers/me")
+    @PostMapping("/internal/customers/me")
     public ResponseEntity<ApiResponse<ProfileDto>> createProfile(@RequestBody  ProfilePayload payload){
         try{
             return ResponseEntity.status(201).body(new ApiResponse<>(201,"Profile has been created successfully", ApiResponse.Status.SUCCESS,profileService.createProfile(payload)));
         }catch (Exception e){
             return ResponseEntity.status(201).body(new ApiResponse<>(500,e.getMessage(), ApiResponse.Status.ERROR));
-
         }
     }
 
     @GetMapping("/customer/me")
     public ResponseEntity<ApiResponse<ProfileDto>> getProfileByCustomerIddddd(){
-
         try{
-            System.out.println("Running ======");
-            return ResponseEntity.status(201).body(new ApiResponse<>(200,"Profile has been retrieved successfully", ApiResponse.Status.SUCCESS,profileService.getProfileByUserIddd()));
+            return ResponseEntity.status(201).body(new ApiResponse<>(200,"Profile has been retrieved successfully", ApiResponse.Status.SUCCESS,profileService.getProfileByUserId()));
         }catch (Exception e){
-            return ResponseEntity.status(201).body(new ApiResponse<>(500,e.getMessage(), ApiResponse.Status.ERROR));
+            return ResponseEntity.status(500).body(new ApiResponse<>(500,e.getMessage(), ApiResponse.Status.ERROR));
 
         }
     }
