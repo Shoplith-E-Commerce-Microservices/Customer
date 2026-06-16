@@ -1,13 +1,26 @@
 spring:
   application:
-    name: customer-service
+    name: customers
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: customer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.shoplith.customers.events.CustomerProfileCreateEvent
+
   jpa:
     hibernate:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/shoplith_customers
     username: postgres
-    password: Souvikp683@
+    password: vyrazu
     driver-class-name: org.postgresql.Driver
   output:
     ansi:
@@ -15,31 +28,8 @@ spring:
   devtools:
     restart:
       enabled: true
-
-server:
-  port: 8001
-#  servlet:
-#   context-path: /customer-app/api
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:5001/eureka
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  info:
-    env:
-      enabled: true
-
-info:
-  app:
-    name: Customer Service
-    description: Shoplith E-commerce Application (Customer Service)
-    version: 1.0.0
-
 jwt:
   secret: dsamdnash32qw903u0riowqejoirj3290roijaskflnlksznfklnsanfasf
+
+server:
+  port: 8009
